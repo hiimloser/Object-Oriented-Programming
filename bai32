@@ -1,0 +1,115 @@
+#include<iostream>
+using namespace std;
+class Media{
+	protected:
+		string tengoi;
+		float giaban;
+	public:
+		Media()
+		{
+			tengoi = '\0';
+			giaban = 0;
+		}
+		void nhap();
+		void xuat();
+		~Media()
+		{
+			tengoi = '\0';
+			giaban = 0;
+		}
+};
+void Media::nhap()
+{
+	fflush(stdin);
+	cout<<"Ten goi : ";
+	getline(cin,tengoi);
+	cout<<"Gia ban : ";
+	cin>>giaban;
+}
+void Media::xuat()
+{
+	cout<<tengoi<<" "<<giaban;
+}
+class Book : private Media{
+	private:
+		int sotrang;
+		string tacgia;
+	public:
+		Book()
+		{
+			tengoi = '\0';
+			giaban = 0;
+			sotrang =0;
+			tacgia ='\0';
+		}
+		void nhap1();
+		void xuat1();
+		friend Check(Book b[10],int n);
+		string get_tengoi();
+		string get_tacgia();
+};
+void Book::nhap1()
+{
+	fflush(stdin);
+	cout<<"Ten goi : ";
+	getline(cin,tengoi);
+	cout<<"Gia ban : ";
+	cin>>giaban;
+	cout<<"So trang : ";
+	cin>>sotrang;
+	cout<<"Tac gia : ";
+	fflush(stdin);
+	getline(cin,tacgia);
+}
+void Book::xuat1()
+{
+	cout<<tengoi<<" "<<giaban<<" "<<sotrang<<" "<<tacgia;
+}
+string Book::get_tacgia()
+{
+	return tacgia;
+}
+string Book::get_tengoi()
+{
+	return tengoi;
+}
+Check(Book b[10],int n)
+{
+	for(int i=0;i<n;i++)
+	{
+		if(b[i].get_tengoi()=="Lap trinh C"&&b[i].get_tacgia()=="Nguyen Thanh Thuy")
+		{
+			cout<<"Sach "<<i<<" :\n";
+			b[i].xuat1();
+			cout<<endl;
+		}
+	}
+}
+int main()
+{
+	Media a;
+	cout<<"Nhap thong tin Media :\n";
+	a.nhap();
+	cout<<"Thong tin Media :\n";
+	a.xuat();
+	int n;
+	Book b[10];
+	cout<<"Tong so sach : ";
+	cin>>n;
+	cout<<"Nhap thong tin Sach :\n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<"Sach "<<i<<" :\n";
+		b[i].nhap1();
+	}
+	cout<<"Thong tin Sach : \n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<"Sach "<<i<<" :\n";
+		b[i].xuat1();
+		cout<<endl;
+	}
+	cout<<"Thong tin Sach theo y/c :\n";
+	Check(b,n);
+	return 0;
+}
