@@ -1,0 +1,140 @@
+#include<iostream>
+using namespace std;
+class Nguoi {
+	protected :
+		string  hoten;
+		string gioitinh;
+		int namsinh;
+	public :
+		Nguoi(){
+			hoten = '\0';
+			gioitinh = '\0';
+			namsinh = 0;
+		}
+		friend istream&operator >>(istream  &is,Nguoi &n)
+		{
+			cout<<"ho ten : ";
+			getline(is,n.hoten);
+			cout<<"gioi tinh : ";
+			getline(is,n.gioitinh);
+			cout<<"nam  sinh : ";
+			is>>n.namsinh;
+			return is;
+		}
+		friend ostream&operator <<(ostream &os,Nguoi &n)
+		{
+			os<<n.hoten<<" "<<n.gioitinh<<" "<<n.namsinh<<" ";
+			return os;
+		}
+		int get_tuoi()
+		{
+			int tuoii;
+			tuoii = 2020-namsinh;
+			return tuoii;
+		}
+		~Nguoi()
+		{
+			hoten = '\0';
+			gioitinh = '\0';
+			namsinh = 0;
+		}
+};
+class NhanVien: private Nguoi{
+	private:
+		float HSThamNien;
+		float MucLuong;
+		float AnCa;
+	public :
+		NhanVien()
+		{
+			HSThamNien=0;
+			MucLuong=0;
+			AnCa=0;
+			NhanVien::hoten = '\0';
+			NhanVien::gioitinh = '\0';
+			NhanVien::namsinh = 0;	
+		}
+		friend istream&operator >>(istream  &is,NhanVien &nv)
+		{
+			fflush(stdin);
+			cout<<"ho ten : ";
+			getline(is,nv.hoten);
+			cout<<"gioi tinh : ";
+			getline(is,nv.gioitinh);
+			cout<<"nam  sinh : ";
+			is>>nv.namsinh;
+			cout<<"he so tham nien :  ";
+			is>>nv.HSThamNien;
+			cout<<"Muc luong : ";
+			is>>nv.MucLuong;
+			cout<<"an ca : ";
+			is>>nv.AnCa;
+			return is;
+		}
+		friend ostream&operator <<(ostream &os,NhanVien &nv)
+		{
+			os<<nv.hoten<<" "<<nv.gioitinh<<" "<<nv.namsinh<<" "<<nv.HSThamNien<<" "<<nv.MucLuong<<" "<<nv.AnCa<<" ";
+			return os;
+		}
+		int NghiHuu()
+		{
+			if((2020 - namsinh)>=60)
+			{
+				return 1;
+			}
+			return 0;
+		}
+		float TinhLuong()
+		{
+			if(NghiHuu()==1)
+			{
+				return 0.75 * MucLuong * HSThamNien;
+			}
+			else
+			{
+				return MucLuong * HSThamNien;
+			}
+		}
+		~NhanVien()
+		{
+			HSThamNien=0;
+			MucLuong=0;
+			AnCa=0;
+			NhanVien::hoten = '\0';
+			NhanVien::gioitinh = '\0';
+			NhanVien::namsinh = 0;	
+		}
+};
+int main()
+{
+	Nguoi a;
+	cout<<"nhap thong tin nguoi : \n";
+	cin>>a;
+	cout<<"\nthong tin nguoi : \n";
+	cout<<a<<a.get_tuoi();
+	int n;
+	cout<<"\ntong so nhan vien : ";
+	cin>>n;
+	cout<<"\nnhap thong tin nhan vien :\n";
+	NhanVien *b = new NhanVien[n];
+	for(int i=0;i<n;i++)
+	{
+		cin>>b[i];
+		cout<<endl;
+	}
+	cout<<"\nthong tin nhan vien :\n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<b[i]<<(b+i)->TinhLuong()<<endl;
+	}
+	cout<<"\nnhan vien den tuoi nghi huu : \n";
+	for(int i=0;i<n;i++)
+	{
+		if((b+i)->NghiHuu()==1)
+		{
+			cout<<b[i]<<(b+i)->TinhLuong()<<endl;
+		}
+	}
+	delete[]b;
+	return 0;
+}
