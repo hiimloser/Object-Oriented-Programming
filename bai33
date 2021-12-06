@@ -1,0 +1,109 @@
+#include<iostream>
+using namespace std;
+class Media{
+	protected:
+		string tengoi;
+		float giaban;
+	public:
+		Media()
+		{
+			tengoi = '\0';
+			giaban = 0;
+		}
+		void nhap();
+		void xuat();
+		~Media()
+		{
+			tengoi = '\0';
+			giaban = 0;
+		}
+};
+void Media::nhap()
+{
+	fflush(stdin);
+	cout<<"Ten goi : ";
+	getline(cin,tengoi);
+	cout<<"Gia ban : ";
+	cin>>giaban;
+}
+void Media::xuat()
+{
+	cout<<tengoi<<" "<<giaban;
+}
+class Video:private Media{
+	private:
+		int tgianchay;
+	public:
+		Video()
+		{
+			tengoi = '\0';
+			giaban = 0;
+			tgianchay =0;
+		}
+		void nhap1();
+		void xuat1();
+		string get_ten();
+		int get_tgian();
+		friend void Check(Video v[10],int n);
+};
+void Video::nhap1()
+{
+	fflush(stdin);
+	cout<<"Ten goi : ";
+	getline(cin,tengoi);
+	cout<<"Gia ban : ";
+	cin>>giaban;
+	cout<<"Thoi gian chay : ";
+	cin>>tgianchay;	
+}
+void Video::xuat1()
+{
+	cout<<tengoi<<" "<<giaban<<" "<<tgianchay;
+}
+string Video:: get_ten()
+{
+	return tengoi;
+}
+int Video::get_tgian()
+{
+	return tgianchay;
+}
+void Check(Video v[10],int n)
+{
+	for(int i=0;i<n;i++)
+	{
+		if(v[i].get_ten()=="Huong dan lap trinh python" && v[i].get_tgian()==10)
+		{
+			cout<<"Video "<<i<<" :\n";
+			v[i].xuat1();
+			cout<<endl;
+		}
+	}
+}
+int main()
+{
+	Media a;
+	cout<<"Nhap thong tin Media :\n";
+	a.nhap();
+	cout<<"\nThong tin Media :\n";
+	a.xuat();
+	int n;
+	Video v[10];
+	cout<<"\nTong so video : \n";
+	cin>>n;
+	for(int i=0;i<n;i++)
+	{
+		cout<<"Video "<<i<<" :\n";
+		v[i].nhap1();
+	}
+	cout<<"\nThong tin video :\n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<"Video "<<i<<" :\n";
+		v[i].xuat1();
+		cout<<endl;
+	}
+	cout<<"\nThong tin video theo y/c :\n";
+	Check(v,n);
+	return 0;
+}
