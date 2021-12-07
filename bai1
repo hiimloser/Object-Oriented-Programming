@@ -61,7 +61,7 @@ void Oto::Xuat1(){
 	cout << "Van toc co so: " <<VanTocCoSo() << endl;
 }
 bool Oto::operator <(const Oto &b) const{
-	return this->VanTocCoSo() > b.VanTocCoSo();
+	return this->VanTocCoSo() < b.VanTocCoSo();
 }
 int main(){
 	PhuongTienGiaoThong p;
@@ -85,7 +85,7 @@ int main(){
 	{
 		for(int j=i+1;j<n;j++)
 		{
-			if((o+i)>(o+j))
+			if((o+i)<(o+j))
 			{
 				swap(*(o+i),*(o+j));
 			}
