@@ -1,0 +1,108 @@
+#include<iostream>
+using namespace std;
+class SV
+{
+	protected:
+		string masv,hoten;
+	public :
+		SV()
+		{
+			masv='\0';
+			hoten='\0';
+		}
+		void nhap();
+		void xuat();
+		~SV()
+		{
+			masv='\0';
+			hoten='\0';
+		}
+};
+void SV::nhap()
+{
+	fflush(stdin);
+	cout<<"Ma sinh vien : ";
+	getline(cin,masv);
+	cout<<"Ho ten : ";
+	getline(cin,hoten);
+}
+void SV::xuat()
+{
+	cout<<masv<<" "<<hoten<<" ";
+}
+class SVCNPM : private SV
+{
+	private:
+		float dtb;
+	public:
+		SVCNPM()
+		{
+			masv='\0';
+			hoten='\0';
+			dtb=0;
+		}
+		void nhap1();
+		void xuat1();
+		float get_dtb();
+		~SVCNPM()
+		{
+			masv='\0';
+			hoten='\0';
+			dtb=0;
+		}	
+};
+void SVCNPM::nhap1()
+{
+	fflush(stdin);
+	cout<<"Ma sinh vien : ";
+	getline(cin,masv);
+	cout<<"Ho ten : ";
+	getline(cin,hoten);
+	cout<<"Diem trung binh : ";
+	cin>>dtb;
+}
+void SVCNPM::xuat1()
+{
+	cout<<masv<<" "<<hoten<<" "<<dtb;
+}
+float SVCNPM::get_dtb()
+{
+	return dtb;
+}
+int main()
+{
+//	SV a;
+//	cout<<"Nhap thong tin sinh vien :\n";
+//	a.nhap();
+//	cout<<"Thong tin sinh vien :\n";
+//	a.xuat();
+	SVCNPM b[10];
+	int n;
+	cout<<"Tong so SVCNPM : ";
+	cin>>n;
+	cout<<"Nhap thong tin SVCNPM :\n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<"SV "<<i<<" :\n";
+		b[i].nhap1();
+		cout<<endl;
+	}
+	cout<<"Thong tin SVCNPM : \n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<"SV "<<i<<" :\n";
+		b[i].xuat1();
+		cout<<endl;
+	}
+	cout<<"Thong tin SVCNPM co dtb >= 8.5 :\n";
+	for(int i=0;i<n;i++)
+	{
+		if(b[i].get_dtb()>=8.5)
+		{
+			cout<<"SV "<<i<<" :\n";
+			b[i].xuat1();
+			cout<<endl;
+		}
+	}
+	return 0;
+}
