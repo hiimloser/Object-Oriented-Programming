@@ -22,13 +22,13 @@ void LOPHOC::nhap()
 }
 void LOPHOC::xuat()
 {
-	cout<<malophoc<<"/"<<tenlophoc<<"/"<<endl;
+	cout<<malophoc<<" "<<tenlophoc<<" "<<endl;
 }
 class GIANGDAY : private LOPHOC{
 	private :
 		string magiangvien,mamonhoc;
 		static int sotietdagiangday;
-		float sotinchi;
+		int sotinchi;
 	public:
 		GIANGDAY()
 		{
@@ -37,28 +37,37 @@ class GIANGDAY : private LOPHOC{
 			malophoc=tenlophoc=0;
 			sotinchi=0;
 		}
+		int get_sotc();
 		void nhap1();
 		void xuat1();
-		float sotietconlai();
+		int sotietconlai();
 };
 int GIANGDAY::sotietdagiangday =0;
 void GIANGDAY::nhap1()
 {
+	GIANGDAY::nhap();
 	fflush(stdin);
 	cout<<"magiangvien : ";
 	getline(cin,magiangvien);
 	cout<<"mamonhoc : ";
 	getline(cin,mamonhoc);
-	GIANGDAY::nhap();
 	cout<<"sotinchi : ";
 	cin>>sotinchi;
 	sotietdagiangday++;
 }
 void GIANGDAY::xuat1()
 {
-	cout<<magiangvien<<" "<<mamonhoc<<" ";
 	GIANGDAY::xuat();
+	cout<<magiangvien<<" "<<mamonhoc<<" ";
 	cout<<" "<<sotinchi<<" "<<sotietdagiangday;
+}
+int GIANGDAY::sotietconlai()
+{
+	return sotinchi*15-sotietdagiangday;
+}
+int GIANGDAY::get_sotc()
+{
+	return  sotinchi;
 }
 int main()
 {
@@ -83,6 +92,34 @@ int main()
 		cout<<"GIANGDAY "<<i<<" :\n";
 		GD[i].xuat1();
 		cout<<endl;
+	}
+	cout<<"\nThong tin lop co 3 tin chi :\n";
+	for(int i=0;i<n;i++)
+	{
+		if(GD[i].get_sotc()==3)
+		{
+			cout<<"GIANGDAY "<<i<<" :\n";
+			GD[i].xuat1();
+			cout<<endl;
+		}
+	}
+	cout<<"\nThong tin ma cac giang vien :\n";
+	int min = GD[0].sotietconlai();
+	for(int i=0;i<n;i++)
+	{
+		if(min>GD[i].sotietconlai())
+		{
+			min=GD[i].sotietconlai();
+		}
+	}
+	for(int i=0;i<n;i++)
+	{
+		if(GD[i].sotietconlai()==min)
+		{
+			cout<<"GIANGDAY "<<i<<" :\n";
+			GD[i].xuat1();
+			cout<<endl;
+		}
 	}
 	return 0;
 }
