@@ -1,0 +1,88 @@
+#include<iostream>
+using namespace std;
+
+class LOPHOC{
+	protected:
+		int malophoc,tenlophoc;
+	public:
+		LOPHOC()
+		{
+			malophoc=tenlophoc=0;
+		}
+		void nhap();
+		void xuat();
+};
+void LOPHOC::nhap()
+{
+	cout<<"malophoc  : ";
+	cin>>malophoc;
+	cout<<"tenlophoc : ";
+	cin>>tenlophoc;
+
+}
+void LOPHOC::xuat()
+{
+	cout<<malophoc<<"/"<<tenlophoc<<"/"<<endl;
+}
+class GIANGDAY : private LOPHOC{
+	private :
+		string magiangvien,mamonhoc;
+		static int sotietdagiangday;
+		float sotinchi;
+	public:
+		GIANGDAY()
+		{
+			magiangvien ='\0';
+			mamonhoc='0';
+			malophoc=tenlophoc=0;
+			sotinchi=0;
+		}
+		void nhap1();
+		void xuat1();
+		float sotietconlai();
+};
+int GIANGDAY::sotietdagiangday =0;
+void GIANGDAY::nhap1()
+{
+	fflush(stdin);
+	cout<<"magiangvien : ";
+	getline(cin,magiangvien);
+	cout<<"mamonhoc : ";
+	getline(cin,mamonhoc);
+	GIANGDAY::nhap();
+	cout<<"sotinchi : ";
+	cin>>sotinchi;
+	sotietdagiangday++;
+}
+void GIANGDAY::xuat1()
+{
+	cout<<magiangvien<<" "<<mamonhoc<<" ";
+	GIANGDAY::xuat();
+	cout<<" "<<sotinchi<<" "<<sotietdagiangday;
+}
+int main()
+{
+	LOPHOC a;
+	cout<<"Nhap thong tin ma va lop monhoc : \n";
+	a.nhap();
+	cout<<"\nThong tin ma va lop monhoc :\n";
+	a.xuat();
+	GIANGDAY GD [10];
+	int n;
+	cout<<"\nTong so giangday : ";
+	cin>>n;
+	cout<<"\nNhap thong tin giangday :\n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<"GIANGDAY "<<i<<" :\n";
+		GD[i].nhap1();
+	}
+	cout<<"\nThong tin GIANGDAY :\n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<"GIANGDAY "<<i<<" :\n";
+		GD[i].xuat1();
+		cout<<endl;
+	}
+	return 0;
+}
