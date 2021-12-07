@@ -1,0 +1,124 @@
+#include<iostream>
+using namespace std;
+class Date{
+	protected:
+		int ngay,thang,nam;
+	public:
+		Date()
+		{
+			ngay=thang=nam=0;
+		}
+		void nhap();
+		void xuat();
+		~Date()
+		{
+			ngay=thang=nam=0;
+		}
+};
+void Date::nhap()
+{
+	cout<<"Ngay : ";
+	cin>>ngay;
+	cout<<"Thang : ";
+	cin>>thang;
+	cout<<"Nam : ";
+	cin>>nam;
+}
+void Date::xuat()
+{
+	cout<<ngay<<"/"<<thang<<"/"<<nam;
+}
+class MuonTra : private Date{
+	private :
+		string madg ,masach;
+		int soluong;
+		static int phicuoc;
+	public:
+		MuonTra()
+		{
+			ngay=thang=nam=0;
+			madg='\0';
+			masach='\0';
+			soluong=0;
+		}
+		void nhap1();
+		void xuat1();
+		int tinh_tien();
+		bool operator<(const MuonTra &mt)const;
+		~MuonTra()
+		{
+			ngay=thang=nam=0;
+			madg='\0';
+			masach='\0';
+			soluong=0;
+		}
+};
+int MuonTra::phicuoc=0;
+void MuonTra::nhap1()
+{
+	fflush(stdin);
+	cout<<"Ma doc gia : ";
+	getline(cin,madg);
+	cout<<"Ma sach : ";
+	getline(cin,masach);
+	MuonTra::nhap();
+	cout<<"So luong : ";
+	cin>>soluong;
+	phicuoc++;
+}
+void MuonTra::xuat1()
+{
+	cout<<madg<<" "<<masach<<" "<<ngay<<"/"<<thang<<"/"<<nam<<" "<<soluong<<" "<<phicuoc;
+}
+int MuonTra::tinh_tien()
+{
+	return soluong*phicuoc;
+}
+bool MuonTra::operator<(const MuonTra &mt)const
+{
+	return soluong < mt.soluong;
+}
+int main()
+{
+	Date a;
+	cout<<"Nhap thong tin ngay :\n";
+	a.nhap();
+	cout<<"Thong tin ngay :\n";
+	a.xuat();
+	MuonTra b[10];
+	int n;
+	cout<<"\nTong so Muon Tra : ";
+	cin>>n;
+	cout<<"Nhap thong tin Muon Tra :\n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<"STT "<<i<<" :\n";
+		b[i].nhap1();	
+		cout<<endl;
+	}
+	cout<<"\nThong tin Muon Tra :\n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<"STT "<<i<<" :\n";
+		b[i].xuat1();	
+		cout<<" "<<b[i].tinh_tien()<<endl;
+	}
+	cout<<"\nSap xep so luong giam dan :\n";
+	for(int i=0;i<n;i++)
+	{
+		for(int j=i+1;j<n;j++)
+		{
+			if(b[i]<b[j])
+			{
+				swap(b[i],b[j]);
+			}
+		}
+	}
+	for(int i=0;i<n;i++)
+	{
+		cout<<"STT "<<i<<" :\n";
+		b[i].xuat1();	
+		cout<<" "<<b[i].tinh_tien()<<endl;
+	}
+	return 0;
+}
