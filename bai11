@@ -1,0 +1,146 @@
+#include<iostream>
+using namespace std;
+class MonHoc{
+	protected :
+		string mamh;
+		string tenmh;
+		float dtb;
+		int sotc;
+	public :
+		MonHoc()
+		{
+			mamh = '\0';
+			tenmh = '\0';
+			dtb = 0;
+			sotc=0;
+		}
+		int get_sotc();
+		float get_dtb();
+		void nhap();
+		void xuat();
+		~MonHoc()
+		{
+			mamh = '\0';
+			tenmh = '\0';
+			dtb = 0;
+			sotc=0;
+		}
+};
+int MonHoc::get_sotc()
+{
+	return sotc;
+}
+float MonHoc::get_dtb()
+{
+	return dtb;
+}
+void MonHoc::nhap()
+{
+	fflush(stdin);
+	cout<<"Ma mon hoc :  ";
+	getline(cin,this->mamh);
+	cout<<"Ten mon hoc : ";
+	getline(cin,this->tenmh);
+	cout<<"Diem trung binh : ";
+	cin>>dtb;
+	cout<<"So tin chi : ";
+	cin>>sotc;
+}
+void MonHoc::xuat()
+{
+	cout<<mamh<<" "<<tenmh<<" "<<dtb<<" "<<sotc<<" ";
+}
+class SinhVien{
+	private:
+		string masv,tensv;
+		int somh;
+		MonHoc arr[100];
+	public:
+		SinhVien()
+		{
+			masv='\0';
+			tensv='\0';
+		}
+		void nhap1();
+		void xuat1();
+		float DiemTK();
+		~SinhVien()
+		{
+			masv='\0';
+			tensv='\0';
+		}
+};
+void SinhVien::nhap1()
+{
+	fflush(stdin);
+	cout<<"Ma sinh vien : ";
+	getline(cin,masv);
+	cout<<"Ten sinh vien : ";
+	getline(cin,tensv);
+	cout<<"Tong so mon : ";
+	cin>>somh;
+	for(int i=0;i<somh;i++)
+	{
+		cout<<"Mon "<<i<<" :\n";
+		arr[i].nhap();
+	}
+}
+void SinhVien::xuat1()
+{
+	cout<<masv<<" "<<tensv<<endl;
+	cout<<"Thong tin mon :\n";
+	for(int i=0;i<somh;i++)
+	{
+		cout<<"Mon "<<i<<" :\n";
+		arr[i].xuat();
+		cout<<endl;
+	}
+}
+float SinhVien::DiemTK()
+{
+	float tongdiem=0;
+	float tongdiem1=0;
+	float tongtc=0;
+	for(int i=0;i<somh;i++)
+	{
+		tongtc+=arr[i].get_sotc();
+		tongdiem = arr[i].get_dtb()*arr[i].get_sotc();
+		tongdiem1 +=tongdiem;
+	}
+	return tongdiem1/tongtc;
+}
+int main()
+{
+	MonHoc b;
+	cout<<"Nhap thong tin mon hoc :\n";
+	b.nhap();
+	cout<<"\nThong tin mon hoc :\n";
+	b.xuat();
+	int n;
+	SinhVien a[10];
+	cout<<"\nTong so sinh vien : ";
+	cin>>n;
+	cout<<"\nNhap thong tin sinh vien :\n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<"Sinh vien "<<i<<" :\n";
+		a[i].nhap1();
+	}
+	cout<<"\nThong tin sinh vien :\n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<"Sinh vien "<<i<<" :\n";
+		a[i].xuat1();
+		cout<<"Diem trung binh : "<<a[i].DiemTK()<<endl;
+	}
+	int count=0;
+	for(int i=0;i<n;i++)
+	{
+		if(a[i].DiemTK()<4)
+		{
+			count++;
+		}
+	}
+	cout<<"\nTong so sinh vien hoc lai : "<<count;
+	return 0;
+}
