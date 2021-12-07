@@ -1,0 +1,87 @@
+#include<iostream>
+using namespace std;
+class hanghoa{
+	protected:
+		int mahang,tenhang;
+	public:
+		Date()
+		{
+			mahang=tenhang=0;
+		}
+		void nhap();
+		void xuat();
+};
+void hanghoa::nhap()
+{
+	cout<<"mahang  : ";
+	cin>>mahang;
+	cout<<"tenhang : ";
+	cin>>tenhang;
+
+}
+void hanghoa::xuat()
+{
+	cout<<mahang<<"/"<<tenhang<<"/"<<endl;
+}
+class MayTinh : private hanghoa{
+	private :
+		string nhasanxuat,namsanxuat;
+		static int tilekm;
+		float giaban;
+	public:
+		MayTinh()
+		{
+			nhasanxuat ='\0';
+			namsanxuat='0';
+			mahang=tenhang=0;
+			giaban=0;
+		}
+		void nhap1();
+		void xuat1();
+		float giabanthucte();
+};
+int MayTinh::tilekm =0;
+void MayTinh::nhap1()
+{
+	fflush(stdin);
+	cout<<"nha san xuat : ";
+	getline(cin,nhasanxuat);
+	cout<<"nam san xuat : ";
+	getline(cin,namsanxuat);
+	MayTinh::nhap();
+	cout<<"Gia ban niem yet : ";
+	cin>>giaban;
+	tilekm++;
+}
+void MayTinh::xuat1()
+{
+	cout<<nhasanxuat<<" "<<namsanxuat<<" ";
+	MayTinh::xuat();
+	cout<<" "<<giaban<<" "<<tilekm;
+}
+int main()
+{
+	hanghoa a;
+	cout<<"Nhap thong tin ma hang : \n";
+	a.nhap();
+	cout<<"\nThong tin ma hang :\n";
+	a.xuat();
+	MayTinh mt[10];
+	int n;
+	cout<<"\nTong so may tinh : ";
+	cin>>n;
+	cout<<"\nNhap thong tin may tinh :\n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<"May tinh "<<i<<" :\n";
+		mt[i].nhap1();
+	}
+	cout<<"\nThong tin may tinh :\n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<"May tinh "<<i<<" :\n";
+		mt[i].xuat1();
+		cout<<endl;
+	}
+	return 0;
+}
