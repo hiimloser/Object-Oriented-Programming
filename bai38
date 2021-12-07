@@ -1,0 +1,115 @@
+#include <iostream>
+#include <stdio.h>
+using namespace std;
+class PhuongTienGiaoThong
+{
+    protected:
+        string HangSanXuat, TenPhuongTien;
+        int namsx;
+        float VanTocToiDa;
+    public:
+        PhuongTienGiaoThong();
+        ~PhuongTienGiaoThong();
+        void Nhap();
+        void Xuat();
+};
+PhuongTienGiaoThong::PhuongTienGiaoThong(){
+	HangSanXuat= '\0'; 
+	TenPhuongTien='\0';
+	VanTocToiDa=0;
+	namsx=0;
+}
+PhuongTienGiaoThong::~PhuongTienGiaoThong(){
+	HangSanXuat= '\0'; 
+	TenPhuongTien='\0';
+	VanTocToiDa=0;
+	namsx=0;
+}
+void PhuongTienGiaoThong::Nhap(){
+	cout << "Nhap hang san xuat: ";
+	fflush(stdin);
+	getline(cin,HangSanXuat);
+	cout << "Nhap ten phuong tien: ";
+	fflush(stdin);
+	getline(cin,TenPhuongTien);
+	cout<<"Nam san xuat  : ";
+	cin>>namsx;
+	cout << "Nhap van toc toi da: ";
+	cin >> VanTocToiDa;
+}
+void PhuongTienGiaoThong::Xuat(){
+	cout << "HangSanXuat: " << HangSanXuat << endl;
+	cout << "TenPhuongTien: " << TenPhuongTien << endl;
+	cout << "VanTocToiDa: " << VanTocToiDa << endl;
+	cout <<"Nam san xuat : "<<namsx<<endl;
+}
+class Oto : private PhuongTienGiaoThong {
+    private:
+    	string kieudc;
+        int SoBanh;
+    public:
+        Oto() 
+		{
+			kieudc = '\0';
+			SoBanh = 0;
+		}
+        ~Oto() 
+		{
+			kieudc = '\0';
+			SoBanh = 0;
+		}
+        void Nhap1();
+        void Xuat1();
+        float VanTocCoSo();
+        string get_hangsx();
+};
+float Oto::VanTocCoSo() {
+	return VanTocToiDa / SoBanh;
+}
+void Oto::Nhap1(){
+	Oto::Nhap();
+	fflush(stdin);
+	cout<<"Kieu dong co : ";
+	getline(cin,kieudc);
+	cout << "Nhap so banh: ";
+	cin >> SoBanh;
+}
+void Oto::Xuat1(){
+	Oto::Xuat();
+	cout<<"Kieu dong co : "<<kieudc<<endl;
+	cout << "So banh: " << SoBanh << endl;
+	cout << "Van toc co so: " <<VanTocCoSo() << endl;
+}
+string Oto::get_hangsx()
+{
+	return this->HangSanXuat;
+}
+int main(){
+	PhuongTienGiaoThong p;
+	p.Nhap();
+	p.Xuat();
+	int n;
+	cout << "Nhap so luong oto: ";
+	cin >> n;
+	Oto *o=new Oto[n];
+	for(int i=0; i<n; i++){
+		cout << "------->Oto thu " << i+1 << endl;
+		(o+i)->Nhap1();
+	}
+	cout << "------------------DANH SACH OTO-------------------\n";
+	for(int i=0; i<n; i++){
+		cout << "------->Oto thu " << i+1 << endl;
+		(o+i)->Xuat1();
+	}
+	cout << "------------------DANH SACH OTO HONDA-------------------\n";
+	for(int i=0; i<n; i++){
+		if((o+i)->get_hangsx()=="HONDA")
+		{
+			cout << "------->Oto thu " << i+1 << endl;
+			(o+i)->Xuat1();
+		}
+	}
+	delete[]o;
+	return 0;
+	
+}
