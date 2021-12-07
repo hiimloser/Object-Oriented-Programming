@@ -43,9 +43,9 @@ class SVAI : private SV
 		}
 		void nhap1();
 		void xuat1();
-		bool operator > (const SVAI &SV) const
+		bool operator < (const SVAI &SV) const
 		{
-			return this->dtb > SV.dtb;
+			return this->dtb < SV.dtb;
 		}
 		~SVAI()
 		{
@@ -98,7 +98,7 @@ int main()
 	{
 		for(int j=i+1;j<n;j++)
 		{
-			if(b[i]>b[j])
+			if(b[i]<b[j])
 			{
 				swap(b[i],b[j]);
 			}
