@@ -1,0 +1,125 @@
+#include<iostream>
+using namespace std;
+class Nguoi{
+	protected:
+		string madd,hoten;
+	public:
+		Nguoi()
+		{
+			madd='\0';
+			hoten='\0';
+		}
+		void nhap();
+		void xuat();
+		~Nguoi()
+		{
+			madd='\0';
+			hoten='\0';
+		}
+};
+void Nguoi::nhap()
+{
+	fflush(stdin);
+	cout<<"Ma dinh danh : ";
+	getline(cin,madd);
+	cout<<"Ho ten : ";
+	getline(cin,hoten);
+}
+void Nguoi::xuat()
+{
+	cout<<madd<<" "<<hoten;
+}
+class NhanVien:private Nguoi{
+	private :
+		int namsinh;
+		float hsluong;
+		static int trocap;
+	public:
+		NhanVien()
+		{
+			madd='\0';
+			hoten='\0';
+			namsinh = 0;
+			hsluong=0;
+		}
+		void nhap1();
+		void xuat1();
+		float tinh_luong () const
+		{
+			return hsluong *1550 + trocap;
+		}
+		bool operator < (const NhanVien  &nv) const
+		{
+			return tinh_luong() < nv.tinh_luong();
+		}
+		~NhanVien()
+		{
+			madd='\0';
+			hoten='\0';
+			namsinh = 0;
+			hsluong=0;
+		}
+};
+int NhanVien::trocap = 10000;
+void NhanVien::nhap1()
+{
+	fflush(stdin);
+	cout<<"Ma dinh danh : ";
+	getline(cin,madd);
+	cout<<"Ho ten : ";
+	getline(cin,hoten);
+	cout<<"Nam sinh : ";
+	cin>>namsinh;
+	cout<<"He so luong : ";
+	cin>>hsluong;
+}
+void NhanVien::xuat1()
+{
+	cout<<madd<<" "<<hoten<<" "<<namsinh<<" "<<hsluong;
+}
+int main()
+{
+	Nguoi b;
+	cout<<"Nhap thong tin nguoi :\n";
+	b.nhap();
+	cout<<"Thong tin nguoi : \n";
+	b.xuat();
+	NhanVien a[10];
+	int n;
+	cout<<"\nTong so nhan vien : ";
+	cin>>n;
+	cout<<"\nNhap thong tin nhan vien :\n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<"Nhan Vien "<<i<<" :\n";
+		a[i].nhap1();
+		cout<<endl;
+	}
+	cout<<"\nThong tin nhan vien :\n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<"Nhan Vien "<<i<<" :\n";
+		a[i].xuat1();
+		cout<<" "<<a[i].tinh_luong();
+		cout<<endl;
+	}
+	cout<<"\nThong tin nhan vien sap xep :\n";
+	for(int i=0;i<n;i++)
+	{
+		for(int j=i+1;j<n;j++)
+		{
+			if(a[i]<a[j])
+			{
+				swap(a[i],a[j]);
+			}
+		}
+	}
+	for(int i=0;i<n;i++)
+	{
+		cout<<"Nhan Vien "<<i<<" :\n";
+		a[i].xuat1();
+		cout<<" "<<a[i].tinh_luong();
+		cout<<endl;
+	}
+	return 0;
+}
