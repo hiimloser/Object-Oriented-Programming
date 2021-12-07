@@ -1,0 +1,125 @@
+#include<iostream>
+using namespace std;
+
+class MONHOC{
+	protected:
+		int mamonhoc,tenmonhoc;
+	public:
+		MONHOC()
+		{
+			mamonhoc=tenmonhoc=0;
+		}
+		void nhap();
+		void xuat();
+};
+void MONHOC::nhap()
+{
+	cout<<"mamonhoc  : ";
+	cin>>mamonhoc;
+	cout<<"tenmonhoc : ";
+	cin>>tenmonhoc;
+
+}
+void MONHOC::xuat()
+{
+	cout<<mamonhoc<<" "<<tenmonhoc<<" "<<endl;
+}
+class GIANGDAY : private MONHOC{
+	private :
+		string magiangvien,malop;
+		static int sotietdagiangday;
+		int sotinchi;
+	public:
+		GIANGDAY()
+		{
+			magiangvien ='\0';
+			malop='0';
+			mamonhoc=tenmonhoc=0;
+			sotinchi=0;
+		}
+		int get_sotc();
+		void nhap1();
+		void xuat1();
+		int sotietconlai();
+};
+int GIANGDAY::sotietdagiangday =0;
+void GIANGDAY::nhap1()
+{
+	GIANGDAY::nhap();
+	fflush(stdin);
+	cout<<"magiangvien : ";
+	getline(cin,magiangvien);
+	cout<<"malop : ";
+	getline(cin,malop);
+	cout<<"sotinchi : ";
+	cin>>sotinchi;
+	sotietdagiangday++;
+}
+void GIANGDAY::xuat1()
+{
+	GIANGDAY::xuat();
+	cout<<magiangvien<<" "<<malop<<" ";
+	cout<<" "<<sotinchi<<" "<<sotietdagiangday;
+}
+int GIANGDAY::sotietconlai()
+{
+	return sotinchi*15-sotietdagiangday;
+}
+int GIANGDAY::get_sotc()
+{
+	return  sotinchi;
+}
+int main()
+{
+	MONHOC a;
+	cout<<"Nhap thong tin ma va lop monhoc : \n";
+	a.nhap();
+	cout<<"\nThong tin ma va lop monhoc :\n";
+	a.xuat();
+	GIANGDAY GD [10];
+	int n;
+	cout<<"\nTong so giangday : ";
+	cin>>n;
+	cout<<"\nNhap thong tin giangday :\n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<"GIANGDAY "<<i<<" :\n";
+		GD[i].nhap1();
+	}
+	cout<<"\nThong tin GIANGDAY :\n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<"GIANGDAY "<<i<<" :\n";
+		GD[i].xuat1();
+		cout<<endl;
+	}
+	cout<<"\nThong tin lop co 3 tin chi :\n";
+	for(int i=0;i<n;i++)
+	{
+		if(GD[i].get_sotc()==3)
+		{
+			cout<<"GIANGDAY "<<i<<" :\n";
+			GD[i].xuat1();
+			cout<<endl;
+		}
+	}
+	cout<<"\nThong tin ma cac giang vien :\n";
+	int min = GD[0].sotietconlai();
+	for(int i=0;i<n;i++)
+	{
+		if(min>GD[i].sotietconlai())
+		{
+			min=GD[i].sotietconlai();
+		}
+	}
+	for(int i=0;i<n;i++)
+	{
+		if(GD[i].sotietconlai()==min)
+		{
+			cout<<"GIANGDAY "<<i<<" :\n";
+			GD[i].xuat1();
+			cout<<endl;
+		}
+	}
+	return 0;
+}
