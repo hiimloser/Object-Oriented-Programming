@@ -1,0 +1,115 @@
+#include<iostream>
+#include<string.h>
+using namespace std;
+ 
+class HANGHOA{
+	private:
+		string mahang, tenhang;
+	public:
+		HANGHOA() { mahang = '\0'; tenhang = '\0';}
+		void Nhap();
+        void Xuat();
+};
+
+void HANGHOA::Nhap(){
+	cout << "Nhap ma hang: ";
+	fflush(stdin);		
+	getline(cin, mahang);
+	cout << "Nhap ten hang: ";
+	fflush(stdin);
+	getline(cin, tenhang);
+}
+void HANGHOA::Xuat(){
+	cout << "Mahang: " << mahang << endl;
+	cout << "Tenhang: " << tenhang << endl;
+}
+class MAYTINH :public HANGHOA{
+	private:
+		string nhasx;
+		int namsx;
+		float gia_niem_yet;
+		static int tylekm;
+	public:
+		MAYTINH(){ nhasx = '\0'; namsx= 0; gia_niem_yet = 0; }
+		void Nhap1();
+		void Xuat1();
+		string Getnhasx() { return nhasx;}
+		float giathuc();
+};
+void MAYTINH::Nhap1(){
+	HANGHOA :: Nhap();
+	cout << "Nhap nha san xuat: ";
+	fflush(stdin);
+	getline(cin, nhasx);
+	cout << "Nhap nam san xuat: ";
+	cin >> namsx;
+	cout << "Nhap gia ban niem yet: ";
+	cin >> gia_niem_yet;
+	tylekm++;
+}
+void MAYTINH::Xuat1(){
+	HANGHOA :: Xuat();
+	cout << "Nhasx: " << nhasx << endl;
+	cout << "Namsx: " << namsx << endl;
+	cout << "Gianiemyet: " << gia_niem_yet <<endl;
+}
+int MAYTINH :: tylekm =0;
+float MAYTINH ::giathuc()
+{
+	return gia_niem_yet - (gia_niem_yet * tylekm*0.1);
+}
+//float min_GiaThuc(MAYTINH *m, int n){
+//	float min = m[0].giathuc();
+//	for (int i=0; i<n; i++)
+//		if ( min > m[i].giathuc() )
+//			min = m[i].giathuc();
+//	return min;
+//}
+
+int main(){
+//	HANGHOA h;
+//	h.Nhap();
+//	h.Xuat();
+	
+	int n;
+	cout << "Nhap so luong May Tinh :";
+	cin >> n;
+	MAYTINH *m=new MAYTINH[n];
+	for(int i=0; i<n; i++)
+	{
+		cout << "May Tinh thu " << i+1 << endl;
+		m[i].Nhap1();
+	}
+	cout << "---------DANH SACH MAY TINH---------\n";
+	for(int i=0; i<n; i++)
+	{
+		cout << "May Tinh thu " << i+1 << endl;
+		m[i].Xuat1();
+	}
+	
+	cout <<"\n-------Danh sach nha san xuat SAMSUNG--------\n";
+	for(int i=0; i<n; i++)
+	{
+		if(m[i].Getnhasx() == "SAMSUNG")
+		{
+	    	cout << "MAY TINH thu " << i+1 << endl;
+	    	m[i].Xuat1();
+		}
+	}
+	cout<< "\n-------Danh sach may tinh co gia ban thuc te thap nhat----------\n";
+    float min=m[0].giathuc();
+	for(int i=0;i<n;i++)
+	{
+		if(min < m[i].giathuc())
+		{
+			min=m[i].giathuc();
+		}
+	}
+	for(int i=0;i<n;i++)
+	{
+		if(m[i].giathuc() == min)
+		m[i].Xuat1();
+	}
+	delete [] m;
+	return 0;
+}
