@@ -1,0 +1,135 @@
+#include<iostream>
+#include<string>
+using namespace std;
+class Date{
+	protected:
+		int ngay,thang,nam;
+	public:
+		Date()
+		{
+			ngay=thang=nam=0;
+		}
+		void nhap();
+		void xuat();
+};
+void Date::nhap()
+{
+	cout<<"Ngay  : ";
+	cin>>ngay;
+	cout<<"Thang : ";
+	cin>>thang;
+	cout<<"Nam : ";
+	cin>>nam;
+}
+void Date::xuat()
+{
+	cout<<ngay<<"/"<<thang<<"/"<<nam;
+}
+class MayTinh : private Date{
+	private :
+		string mamt,tenmt;
+		static int tilekm;
+		float giaban;
+	public:
+		MayTinh()
+		{
+			mamt ='\0';
+			tenmt='0';
+			ngay=thang=nam=0;
+			giaban=0;
+		}
+		void nhap1();
+		void xuat1();
+		float giabanthucte();
+		string get_tenmt();
+		friend void ASUS(MayTinh mt[10],int n);
+		friend void gia_min(MayTinh mt[10],int n);
+};
+int MayTinh::tilekm =0;
+void MayTinh::nhap1()
+{
+	fflush(stdin);
+	cout<<"Ma may tinh : ";
+	getline(cin,mamt);
+	cout<<"Ten may tinh : ";
+	getline(cin,tenmt);
+	MayTinh::nhap();
+	cout<<"Gia ban niem yet : ";
+	cin>>giaban;
+	tilekm++;
+}
+void MayTinh::xuat1()
+{
+	cout<<mamt<<" "<<tenmt<<" ";
+	MayTinh::xuat();
+	cout<<" "<<giaban<<" "<<tilekm*0.1;
+}
+float MayTinh::giabanthucte()
+{
+	return (giaban - giaban*tilekm*0.1);
+}
+string MayTinh :: get_tenmt()
+{
+	return tenmt;
+}
+void ASUS(MayTinh mt[10],int n)
+{
+	for(int i=0;i<n;i++)
+	{
+		if(mt[i].get_tenmt()==("ASUS"))
+		{
+			mt[i].xuat1();
+			cout<<endl;
+		}
+	}
+}
+void gia_min(MayTinh mt[10],int n)
+{
+	float min;
+	min = mt[0].giabanthucte();
+	for(int i=0;i<n;i++)
+	{
+		if(min>mt[i].giabanthucte())
+		{
+			min=mt[i].giabanthucte();	
+		}
+	}
+	for(int i=0;i<n;i++)
+	{
+		if(mt[i].giabanthucte()==min)
+		{
+			mt[i].xuat1();
+			cout<<endl;
+		}
+	}
+}
+int main()
+{
+	Date a;
+	cout<<"Nhap thong tin ngay thang : \n";
+	a.nhap();
+	cout<<"\nThong tin ngay thang :\n";
+	a.xuat();
+	MayTinh mt[10];
+	int n;
+	cout<<"\nTong so may tinh : ";
+	cin>>n;
+	cout<<"\nNhap thong tin may tinh :\n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<"May tinh "<<i<<" :\n";
+		mt[i].nhap1();
+	}
+	cout<<"\nThong tin may tinh :\n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<"May tinh "<<i<<" :\n";
+		mt[i].xuat1();
+		cout<<endl;
+	}
+	cout<<"\nThong tin may tinh hang ASUS :\n";
+	ASUS(mt,n);
+	cout<<"\nThong tin may tinh gia ban thuc te thap nhat :\n";
+	gia_min(mt,n);
+	return 0;
+}
