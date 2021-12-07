@@ -1,0 +1,100 @@
+#include <iostream>
+#include <stdio.h>
+using namespace std;
+class PhuongTienGiaoThong
+{
+    private:
+        string HangSanXuat, TenPhuongTien;
+    protected:
+        float VanTocToiDa;
+    public:
+        PhuongTienGiaoThong();
+        ~PhuongTienGiaoThong();
+        void Nhap();
+        void Xuat();
+};
+PhuongTienGiaoThong::PhuongTienGiaoThong(){
+	string HangSanXuat, TenPhuongTien;
+	float VanTocToiDa=0;
+}
+PhuongTienGiaoThong::~PhuongTienGiaoThong(){
+	string HangSanXuat, TenPhuongTien;
+	float VanTocToiDa=0;
+}
+void PhuongTienGiaoThong::Nhap(){
+	cout << "Nhap hang san xuat: ";
+	fflush(stdin);
+	getline(cin,HangSanXuat);
+	cout << "Nhap ten phuong tien: ";
+	fflush(stdin);
+	getline(cin,TenPhuongTien);
+	cout << "Nhap van toc toi da: ";
+	cin >> VanTocToiDa;
+}
+void PhuongTienGiaoThong::Xuat(){
+	cout << "HangSanXuat: " << HangSanXuat << endl;
+	cout << "TenPhuongTien: " << TenPhuongTien << endl;
+	cout << "VanTocToiDa: " << VanTocToiDa << endl;
+}
+class Oto : public PhuongTienGiaoThong {
+    private:
+        int SoBanh;
+    public:
+        Oto() { SoBanh = 0;}
+        ~Oto() { SoBanh = 0;}
+        void Nhap1();
+        void Xuat1();
+        float VanTocCoSo() const;
+        bool operator < (const Oto &b) const;
+};
+float Oto::VanTocCoSo() const {
+	return VanTocToiDa / SoBanh;
+}
+void Oto::Nhap1(){
+	Oto::Nhap();
+	cout << "Nhap so banh: ";
+	cin >> SoBanh;
+}
+void Oto::Xuat1(){
+	Oto::Xuat();
+	cout << "So banh: " << SoBanh << endl;
+	cout << "Van toc co so: " <<VanTocCoSo() << endl;
+}
+bool Oto::operator <(const Oto &b) const{
+	return this->VanTocCoSo() > b.VanTocCoSo();
+}
+int main(){
+	PhuongTienGiaoThong p;
+	p.Nhap();
+	p.Xuat();
+	int n;
+	cout << "Nhap so luong oto: ";
+	cin >> n;
+	Oto *o=new Oto[n];
+	for(int i=0; i<n; i++){
+		cout << "------->Oto thu " << i+1 << endl;
+		(o+i)->Nhap1();
+	}
+	cout << "------------------DANH SACH OTO-------------------\n";
+	for(int i=0; i<n; i++){
+		cout << "------->Oto thu " << i+1 << endl;
+		(o+i)->Xuat1();
+	}
+	cout << "----------DANH SACH SAP XEP GIAM DAN--------------\n";
+	for(int i=0;i<n;i++)
+	{
+		for(int j=i+1;j<n;j++)
+		{
+			if((o+i)>(o+j))
+			{
+				swap(*(o+i),*(o+j));
+			}
+		}		
+	}
+	for(int i=0; i<n; i++){
+		cout << "------->Oto thu " << i+1 << endl;
+		(o+i)->Xuat1();
+	}
+	delete[]o;
+	return 0;	
+}
