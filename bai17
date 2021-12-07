@@ -1,0 +1,139 @@
+#include<iostream>
+using namespace std;
+class ThiSinh{
+	protected:
+		string sbd,hoten,dc;
+		float diem_ut;
+	public:
+		ThiSinh()
+		{
+			sbd='\0';
+			hoten='\0';
+			dc='\0';
+			diem_ut=0;
+		}
+		void nhap();
+		void xuat();
+		~ThiSinh()
+		{
+			sbd='\0';
+			hoten='\0';
+			dc='\0';
+			diem_ut=0;
+		}
+};
+void ThiSinh::nhap()
+{
+	fflush(stdin);
+	cout<<"So bao danh : ";
+	getline(cin,sbd);
+	cout<<"Ho ten : ";
+	getline(cin,hoten);
+	cout<<"Dia chi : ";
+	getline(cin,dc);
+	cout<<"Diem uu tien : ";
+	cin>>diem_ut;
+}
+void ThiSinh::xuat()
+{
+	cout<<sbd<<" "<<hoten<<" "<<dc<<" "<<diem_ut;
+}
+class ThiSinhKhoiA : private ThiSinh{
+	private :
+		float toan,ly,hoa;
+	public :
+		ThiSinhKhoiA()
+		{
+			sbd='\0';
+			hoten='\0';
+			dc='\0';
+			diem_ut=0;
+			toan=ly=hoa=0;
+		}
+		void nhap1();
+		void xuat1();
+		float get_diemut();
+		float tong_diem() const;
+		bool operator > (const ThiSinhKhoiA &sv)const;
+		~ThiSinhKhoiA()
+		{
+			sbd='\0';
+			hoten='\0';
+			dc='\0';
+			diem_ut=0;
+			toan=ly=hoa=0;
+		}
+};
+void ThiSinhKhoiA::nhap1()
+{
+	fflush(stdin);
+	cout<<"So bao danh : ";
+	getline(cin,sbd);
+	cout<<"Ho ten : ";
+	getline(cin,hoten);
+	cout<<"Dia chi : ";
+	getline(cin,dc);
+	cout<<"Diem uu tien : ";
+	cin>>diem_ut;
+	cout<<"Nhap diem toan ly hoa : ";
+	cin>>toan>>ly>>hoa;
+}
+void ThiSinhKhoiA::xuat1()
+{
+	cout<<sbd<<" "<<hoten<<" "<<dc<<" "<<diem_ut<<" "<<toan<<" "<<ly<<" "<<hoa;
+}
+float ThiSinhKhoiA::tong_diem() const
+{
+	return toan+ly+hoa;
+}
+float ThiSinhKhoiA::get_diemut()
+{
+	return this->diem_ut;
+}
+bool ThiSinhKhoiA::operator > (const ThiSinhKhoiA &sv)const
+{
+	return tong_diem()>sv.tong_diem();
+}
+int main()
+{
+	ThiSinh a;
+	cout<<"Nhap thong tin thi sinh :\n";
+	a.nhap();
+	cout<<"\nThong tin thi  sinh :\n";
+	a.xuat();
+	ThiSinhKhoiA b[10];
+	int n;
+	cout<<"\nTong thi sinh khoi A : ";
+	cin>>n;
+	cout<<"\nNhap thong tin thi sinh :\n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<"Thi sinh "<<i<<" :\n";
+		b[i].nhap1();
+		cout<<endl;
+	}
+	cout<<"\nThong tin thi sinh : \n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<"Thi sinh "<<i<<" :\n";
+		b[i].xuat1();
+		cout<<" "<<b[i].tong_diem()+b[i].get_diemut()<<endl;
+	}
+	cout<<"\nThong tin thi sinh sap xep giam dan :\n";
+	for(int i=0;i<n;i++)
+	{
+		for(int j=i+1;j<n;j++)
+		{
+			if(b[i]>b[j])
+			{
+				swap(b[i],b[j]);
+			}
+		}
+	}
+	for(int i=n-1;i>=0;i--)
+	{
+		cout<<"Thi sinh "<<i<<" :\n";
+		b[i].xuat1();
+		cout<<" "<<b[i].tong_diem()+b[i].get_diemut()<<endl;
+	}
+	return 0;
