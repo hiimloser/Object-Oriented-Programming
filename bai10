@@ -1,0 +1,90 @@
+#include<iostream>
+using namespace std;
+
+class NhanVien{
+	private:
+		string manv, hoten;
+		int tuoi;
+	public:
+		NhanVien() { manv='\0'; hoten='\0'; tuoi = 0;}
+		void Nhap();
+		void Xuat();
+		int gettuoi() { return tuoi;}
+};
+void NhanVien::Nhap(){
+	cout << "Nhap ma nhan vien: ";
+	fflush(stdin);
+	getline(cin, manv);
+	cout << "Nhap ho ten: ";
+	fflush(stdin);
+	getline(cin, hoten);
+	cout << "Nhap tuoi: ";
+	cin >> tuoi;
+}
+void NhanVien::Xuat(){
+	cout << "Ma nhan vien: " << manv << endl;
+	cout << "Ho ten: " << hoten << endl;
+	cout << "Tuoi: " << tuoi << endl;
+}
+class CanBo : public NhanVien{
+	private:
+		float hsl,phu_cap;
+		string trinh_do;
+	public:
+		void Nhap1();
+		void Xuat1();
+		float tinh_luong();
+		
+};
+float CanBo::tinh_luong(){
+	float luong=0;
+	if(gettuoi() < 60 ) luong =hsl*1550 + phu_cap;
+	if(gettuoi() >=60 ) luong=0.7*(hsl*1550 + phu_cap);
+	return luong;
+}
+void CanBo::Nhap1(){
+	NhanVien::Nhap();
+	cout << "Nhap he so luong: ";
+	cin >> hsl;
+	cout << "Nhap phu cap: ";
+	cin >> phu_cap;
+	cout << "Nhap trinh do: ";
+	fflush(stdin);
+	getline(cin, trinh_do);
+}
+void CanBo::Xuat1(){
+	NhanVien::Xuat();
+	cout << "Hsl: " << hsl << endl;
+	cout << "Phu cap: " << phu_cap << endl;
+	cout << "Trinh do: " << trinh_do << endl;
+	cout << "Luong: " << tinh_luong() << endl;
+}
+
+int main(){
+	NhanVien nv;
+	nv.Nhap();
+	nv.Xuat();
+	
+	int n;
+	cout << "Nhap so luong Can Bo: ";
+	cin >> n;
+	CanBo *c=new CanBo[n];
+	for(int i=0; i<n; i++){
+		cout << "Can Bo thu " << i+1 << endl; 
+		(c+i)->Nhap1();
+	}
+	cout << "------------------------DANH SACH CAN BO-----------------------\n";
+	for(int i=0; i<n; i++){
+		cout << "Can Bo thu " << i+1 << endl;
+		(c+i)->Xuat1();
+	}
+	cout <<"----------DANH SACH CAN BO DEN TUOI CHUA VE HUU VA LUONG-----------\n";
+	for (int i=0;i<n;i++)
+	{
+		if ((c+i)->gettuoi() < 60)
+	    (c+i)->Xuat1();
+	}
+	delete[]c;
+	return 0;
+	
+}
