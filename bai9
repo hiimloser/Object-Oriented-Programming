@@ -1,0 +1,103 @@
+#include<iostream>
+using namespace std;
+class DichVu{
+	private:
+		string madv, tendv;
+		float giacuoc;
+	public:
+		DichVu() { madv='\0'; tendv='\0'; giacuoc = 0;}
+		void Nhap();
+		void Xuat();
+		float Laygiacuoc() {return giacuoc;};	
+};
+void DichVu::Nhap(){
+	cout << "Nhap ma dich vu: ";
+	fflush(stdin);
+	getline(cin, madv);
+	cout << "Nhap ten dich vu: ";
+	fflush(stdin);
+	getline(cin, tendv);
+	cout << "Nhap gia cuoc: ";
+	cin >> giacuoc;
+}
+void DichVu::Xuat(){
+	cout << "Ma dich vu: " << madv << endl;
+	cout << "Ten dich vu: " << tendv << endl;
+	cout << "Gia cuoc: " << giacuoc << endl;
+}
+class NGUOI{
+	private:
+		string hoten, diachi;
+		int sodt;
+	public:
+		NGUOI() { hoten='\0'; diachi='\0'; sodt = 0;}
+		void Nhap1();
+		void Xuat1();
+};
+void NGUOI::Nhap1(){
+	cout << "Nhap ho ten: ";
+	fflush(stdin);
+	getline(cin, hoten);
+	cout << "Nhap dia chi: ";
+	fflush(stdin);
+	getline(cin, diachi);
+	cout << "Nhap so dien thoai: ";
+	cin >> sodt;
+}
+void NGUOI::Xuat1(){
+	cout << "Ho ten: " << hoten << endl;
+	cout << "Dia chi: " << diachi << endl;
+	cout << "So dien thoai: " << sodt << endl;
+}
+class KhachHang : public NGUOI{
+	private:
+	    int SoLuongDichvu;
+	    DichVu dv[100];
+	public:
+	    KhachHang(){ SoLuongDichvu = 0; dv[100] ;} 
+	    void Nhap2();
+	    void Xuat2();
+	    float tinh_gia_cuoc();
+};
+void KhachHang::Nhap2(){
+	NGUOI::Nhap1();
+	cout << "\nNhap so luong dich vu: ";
+	cin >> SoLuongDichvu;
+	for(int i=0; i<SoLuongDichvu; i++)
+	{
+		cout << "Dich Vu thu " << i+1 << endl;;
+		dv[i].Nhap();
+	}
+	
+}
+void KhachHang::Xuat2(){
+	NGUOI::Xuat1();
+	cout << "So luong dich vu: " << SoLuongDichvu << endl;
+	for(int i=0; i<SoLuongDichvu; i++)
+	{
+		cout << "Dich Vu thu " << i+1  << endl;;
+		dv[i].Xuat();
+		cout << endl;
+	}
+	
+}
+float KhachHang::tinh_gia_cuoc(){
+	float tongcuoc=0;
+	for(int i=0; i<SoLuongDichvu; i++){
+		tongcuoc += dv[i].Laygiacuoc();
+	}
+	return tongcuoc;
+}
+int main(){
+	cout << "THONG TIN 1 NGUOI\n";
+	NGUOI ng;
+	ng.Nhap1();
+	ng.Xuat1();
+	
+	cout << "\nTHONG TIN 1 KHACH HANG \n";
+	KhachHang k;
+	k.Nhap2();
+	k.Xuat2();
+	
+    cout<<"\nTHONG TIN TIEN CUOC: "<<k.tinh_gia_cuoc();
+}
