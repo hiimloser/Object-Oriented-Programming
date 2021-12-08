@@ -1,0 +1,78 @@
+#include<iostream>
+using namespace std;
+
+class DATE{
+	private:
+		int ngay,thang,nam;
+	public:
+		DATE() { ngay= 0; thang = 0; nam= 0;}
+		void Nhap();
+		void Xuat();
+};
+void DATE::Nhap(){
+	cout << "Nhap ngay, thang, nam: ";
+	cin >> ngay >> thang >> nam;
+}
+void DATE::Xuat(){
+	cout << "Ngay, thang, nam: " << ngay << "/" << thang << "/" << nam << endl;
+}
+
+class CANBO : public DATE{
+	private:
+		string macb, tencb;
+		float luong_co_ban;
+		static float tien_phu_cap;
+	public:
+		CANBO() { macb ='0'; tencb='0'; }	
+		void Nhap1();
+		void Xuat1();	
+		float tinh_luong();
+};
+float CANBO::tien_phu_cap=10;
+void CANBO::Nhap1(){
+	cout << "Nhap ma can bo: ";
+	fflush(stdin);
+	getline(cin, macb);
+	cout << "Nhap ten can bo: ";
+	fflush(stdin);
+	getline(cin, tencb);
+	cout << "Nhap luong co ban: ";
+	cin >> luong_co_ban;
+	DATE::Nhap();
+}
+void CANBO::Xuat1(){
+	cout << "Ma can bo: " << macb << endl;
+	cout << "Ten can bo: " << tencb << endl;
+	cout << "Luong co ban: " << luong_co_ban << endl;
+	DATE::Xuat();
+}
+float CANBO::tinh_luong(){
+	float luong=0;
+	return luong = luong_co_ban + tien_phu_cap;
+}
+int main(){
+	DATE d;
+	d.Nhap();
+	d.Xuat();
+	
+	int n;
+	cout << "Nhap so luong can bo: ";
+	cin >> n;
+	CANBO *c=new CANBO[n];
+	for(int i=0; i<n; i++){
+		cout << "------->CAN BO thu " << i+1 << endl;
+		c[i].Nhap1();
+	}
+	cout << "------------------DANH SACH CAN BO-------------------\n";
+	for(int i=0; i<n; i++){
+		cout << "------->CAN BO thu " << i+1 << endl;
+		c[i].Xuat1();
+	}
+	cout << "------------------DANH SACH LUONG CAN BO-------------------\n";
+	for(int i=0; i<n; i++){
+		cout << "------->CAN BO thu " << i+1 << endl;
+		cout << "Tinh luong: " << c[i].tinh_luong() <<endl;
+	}
+	return 0;
+	
+}
