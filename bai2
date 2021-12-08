@@ -1,0 +1,91 @@
+#include<iostream>
+using namespace std;
+
+class NGUOI{
+	private:
+	    string madd, hoten;
+	public:
+		NGUOI() { madd='\0'; hoten='\0';}
+	    ~NGUOI() { madd='\0'; hoten='\0';}
+	    void Xuat();
+	    void Nhap();
+};
+void NGUOI::Nhap(){
+	cout << "Nhap ma dinh danh: ";
+	fflush(stdin);
+	getline(cin, madd);
+	cout << "Nhap ho ten: ";
+	fflush(stdin);
+	getline(cin, hoten);
+}
+void NGUOI::Xuat(){
+	cout << "Ma dinh danh: " << madd << endl;
+	cout << "Ho ten: " << hoten << endl;
+}
+class NHANVIEN : public NGUOI{
+	private:
+		int namsinh;
+		float hsl;
+		static float tien_phu_cap;
+	public:
+		NHANVIEN() { namsinh = 0; hsl = 0;}
+		void Nhap1();
+		void Xuat1();
+		float tinh_luong();
+		bool operator > (const NHANVIEN &b) const;
+};
+float NHANVIEN::tien_phu_cap=10;
+void NHANVIEN::Nhap1(){
+	NGUOI::Nhap();
+	cout << "Nhap nam sinh: ";
+	cin >> namsinh;
+	cout << "Nhap he so luong: ";
+	cin >> hsl;
+}
+float NHANVIEN::tinh_luong(){
+	float luong =0;
+	return luong= hsl*1550 + tien_phu_cap;
+}
+void NHANVIEN::Xuat1(){
+	NGUOI::Xuat();
+	cout << "Nam sinh: " << namsinh << endl;
+	cout << "He so luong: " << hsl << endl;
+	cout << "Tinh luong: " << tinh_luong() << endl;
+}
+bool NHANVIEN::operator > (const NHANVIEN &b) const{
+	return hsl < b.hsl;
+}
+int main(){
+	NGUOI x;
+	x.Nhap();
+	x.Xuat();
+	
+	int n;
+	cout << "Nhap so luong nhan vien: ";
+	cin >> n;
+	NHANVIEN *nv=new NHANVIEN[n];
+	for(int i=0; i<n; i++){
+		cout << "------>Nhan vien thu " << i+1 << endl;
+		(nv+i)->Nhap1();
+	}
+	cout << "-------------DANH SACH NHAN VIEN---------------\n";
+	for(int i=0; i<n; i++){
+		cout << "------>Nhan vien thu " << i+1 << endl;
+		(nv+i)->Xuat1();
+	}
+	
+	for(int i=0; i<n; i++){
+		for(int j=i+1; j<n; j++){
+			if(*(nv+i) > *(nv+j))
+			{
+				swap(*(nv+i),*(nv+j));
+			}
+		}
+	}
+	cout << "----------DANH SACH SAP XEP GIAM DAN--------------\n";
+	for(int i=0; i<n; i++){
+		cout << "------->NHANVIEN thu " << i+1 << endl;
+		(nv+i)->Xuat1();
+	}
+	return 0;
+}
