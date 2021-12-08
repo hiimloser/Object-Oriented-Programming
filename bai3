@@ -1,0 +1,91 @@
+#include<iostream>
+#include<math.h>
+using namespace std;
+
+class NGUOI{
+	private:
+		int madd;
+		string hoten;
+	public:
+		NGUOI() {  madd = 0; hoten ='\0';}
+		~NGUOI() {  madd = 0; hoten ='0';}
+		void Nhap();
+		void Xuat();
+};
+void NGUOI::Nhap(){
+	cout << "Nhap ma dinh danh: ";
+	cin >> madd;
+	cout << "Nhap ho ten: ";
+	fflush(stdin);
+	getline(cin,hoten);
+}
+void NGUOI::Xuat(){
+	cout << "Ma dinh danh: " << madd << endl;
+	cout << "Ho ten: " << hoten << endl;
+}
+
+class NHANVIEN : public NGUOI{
+	private:
+		int namsinh;
+		float hsl;
+		static float tpc;
+	public:
+		NHANVIEN() { namsinh = 0; hsl = 0;}
+		~NHANVIEN() { namsinh = 0; hsl = 0;}
+		void Nhap1();
+		void Xuat1();
+		float tinh_luong();
+};
+float NHANVIEN::tpc=10;
+void NHANVIEN :: Nhap1(){
+	NGUOI::Nhap();
+	cout << "Nhap nam sinh: ";
+	cin >> namsinh;
+	cout << "Nhap he so luong: ";
+	cin >> hsl;
+}
+float NHANVIEN :: tinh_luong(){
+	float luong=0;
+	return luong= (this->hsl*1550 + this->tpc);
+}
+void NHANVIEN::Xuat1(){
+	NGUOI::Xuat();
+	cout << "Nam sinh: " << namsinh << endl;
+	cout << "He so luong: " << hsl << endl;
+	cout << "Luong: " << tinh_luong() << endl;
+}
+
+int main(){
+	NGUOI ng;
+	ng.Nhap();
+	ng.Xuat();
+	
+	NHANVIEN nv[50];
+	int n;
+	cout << "Nhap so luong nhan vien: ";
+	cin >> n;
+	for(int i=0; i<n; i++){
+		cout << "Nhan vien thu " << i+1 << endl;
+		nv[i].Nhap1();
+	}	
+	cout << "--------------------DANH SACH NHAN VIEN CUNG VOI LUONG-------------------\n";
+	for(int i=0; i<n; i++){
+		cout << "Nhan vien thu " << i+1 << endl;
+		nv[i].Xuat1();
+	}	
+    float max=nv[0].tinh_luong();
+	for(int i=0;i<n;i++)
+        {
+            if(max<nv[i].tinh_luong())
+            {
+                max=nv[i].tinh_luong(); 
+            }
+        }
+    cout<<"\n------------DANH SACH NHANVIEN LUONG MAX -----------------\n";
+    for(int i=0;i<n;i++)
+    {
+        if(max==nv[i].tinh_luong())
+		nv[i].Xuat1();
+    }
+	return 0;
+}
