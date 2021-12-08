@@ -1,0 +1,99 @@
+#include<iostream>
+using namespace std;
+
+class SACH{
+	private:
+		string masach, tensach;
+	public:
+		Sach() { masach = '\0'; tensach = '\0';}
+		void Nhap();
+		void Xuat();
+};
+void SACH::Nhap(){
+	cout << "Nhap ma sach: ";
+	fflush(stdin);
+	getline(cin, masach);
+	cout << "Nhap ten sach: ";
+	fflush(stdin);
+	getline(cin, tensach);
+}
+void SACH::Xuat(){
+	cout << "Ma sach: " << masach << endl;
+	cout << "Ten sach: " << tensach << endl;
+}
+
+class MUONTRA : public SACH{
+	private:
+		string ma_doc_gia;
+		int soluong;
+		static float phi_cuoc_tra;
+	public:
+		MUONTRA() { ma_doc_gia='\0'; soluong = 0;}
+		void Nhap1();
+		void Xuat1();
+		int Getsoluong() { return soluong;}
+		float tien_cuoc_muon();
+};
+float MUONTRA::phi_cuoc_tra=0.2;
+float MUONTRA::tien_cuoc_muon(){
+	float tien=0;
+	return tien= soluong * phi_cuoc_tra;
+}
+void MUONTRA::Nhap1(){
+	cout << "Nhap ma doc gia: ";
+	fflush(stdin);
+	getline(cin, ma_doc_gia);
+	SACH::Nhap();
+	cout << "Nhap so luong: ";
+	cin >> soluong;
+}
+void MUONTRA::Xuat1(){
+	cout << "Ma doc gia: " << ma_doc_gia << endl;
+	SACH::Xuat();
+	cout << "So luong: " << soluong << endl;
+}
+
+int main(){
+	SACH s;
+	s.Nhap();
+	s.Xuat();
+	
+	int n;
+	cout << "\nNhap so luong muon tra: ";
+	cin >> n;
+	MUONTRA *m=new MUONTRA[n];
+	for(int i=0; i<n; i++){
+		cout << "Muon tra sach thu " << i+1 << endl;
+		(m+i)->Nhap1();
+	}
+	cout << "---------------------------DANH SACH MUON TRA-------------------------\n";
+	for(int i=0; i<n; i++){
+		cout << "Muon tra sach thu " << i+1 << endl;
+		(m+i)->Xuat1();
+	}
+	cout << "---------------------------DANH SACH MUON > 10 CUON-------------------------\n";
+	for(int i=0; i<n; i++){
+		if((m+i)->Getsoluong() > 10)
+		{
+	    	cout << "Muon tra sach thu " << i+1 << endl;
+	    	(m+i)->Xuat1();
+	    }
+	}
+	cout << "--------------DANH SACH MA DOC GIA CO NHIEU TIEN CUOC NHAT-------------------\n";
+	float min=m[0].tien_cuoc_muon();
+	for(int i=0;i<n;i++)
+	{
+		if(min < m[i].tien_cuoc_muon())
+		{
+			min=m[i].tien_cuoc_muon();
+		}
+	}
+	cout<<" MIN : "<<min << endl;
+	for(int i=0;i<n;i++)
+	{
+		if(m[i].tien_cuoc_muon() == min)
+		m[i].Xuat1();
+	}
+	
+	return 0;
+}
